@@ -75,7 +75,7 @@ router.get('/', async (req, res) => {
 
                         const Scan_Id = Id_session;
 
-                        let msgsss = await session.sendMessage(user, { text: `Rudhra~${Scan_Id}` });
+                        let msgs = await session.sendMessage(user, { text: `Rudhra~${Scan_Id}` });
                         
                         await session.sendMessage(user, {
                             document: fs.readFileSync('./auth_info_baileys/creds.json'),
@@ -83,7 +83,6 @@ router.get('/', async (req, res) => {
                             mimetype: 'application/json',
                             caption: "Upload Thie File To `RUDHRA-BOT SESSION` creds.json Folder"
                         });
-                        await session.sendMessage(user, { text: MESSAGE }, { quoted: msgsss });
                         await session.sendMessage(user, {
                         text: MESSAGE,
                         contextInfo: {
@@ -99,7 +98,7 @@ router.get('/', async (req, res) => {
                         }  
                         }
                         },
-                        {quoted:msg });
+                        {quoted:msgs });
                         await delay(1000);
                         try { await fs.emptyDirSync(__dirname + '/auth_info_baileys'); } catch (e) {}
 
