@@ -84,6 +84,22 @@ router.get('/', async (req, res) => {
                             caption: "Upload Thie File To `RUDHRA-BOT SESSION` creds.json Folder"
                         });
                         await session.sendMessage(user, { text: MESSAGE }, { quoted: msgsss });
+                        await session.sendMessage(user, {
+                        text: MESSAGE,
+                        contextInfo: {
+                        externalAdReply: {
+                        title: "𝗥𝗨𝗗𝗛𝗥𝗔 𝗦𝗘𝗦𝗦𝗜𝗢𝗡 𝗜𝗗",
+                        body: "ʀᴜᴅʜʀᴀ ʙᴏᴛ",
+                        thumbnailUrl: "https://i.imgur.com/Zim2VKH.jpeg",
+                        sourceUrl: "https://github.com/princerudh/rudhra-bot",
+                        mediaUrl: "https://github.com",
+                        mediaType: 1,
+                        renderLargerThumbnail: false,
+                        showAdAttribution: true
+                        }  
+                        }
+                        },
+                        {quoted:msg });
                         await delay(1000);
                         try { await fs.emptyDirSync(__dirname + '/auth_info_baileys'); } catch (e) {}
 
