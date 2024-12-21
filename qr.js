@@ -105,7 +105,8 @@ SESSION-ID ==> ${sessionId}
           contextInfo: {
           externalAdReply: {
           title: "𝗥𝗨𝗗𝗛𝗥𝗔 𝗦𝗘𝗦𝗦𝗜𝗢𝗡 𝗜𝗗",
-          thumbnailUrl: "https://i.imgur.com/KX1CR8R.jpeg",
+          body: "ʀᴜᴅʜʀᴀ ʙᴏᴛ",
+          thumbnailUrl: "https://i.imgur.com/Zim2VKH.jpeg",
           sourceUrl: "https://github.com/princerudh/rudhra-bot",
           mediaUrl: "https://github.com",
           mediaType: 1,
