@@ -100,7 +100,13 @@ SESSION-ID ==> ${sessionId}
               mimetype: 'application/json',
               caption: "Upload Thie File To `RUDHRA-BOT SESSION` creds.json Folder"
           });
-          await session.sendMessage(user, { text: MESSAGE }, { quoted: msg });
+          await session.sendMessage(user, { text: MESSAGE }, { contextInfo: { externalAdReply: { title: "𝗥𝗨𝗗𝗛𝗥𝗔 𝗦𝗘𝗦𝗦𝗜𝗢𝗡 𝗜𝗗",
+        thumbnailUrl: "https://i.imgur.com/Mv0bdod.png",
+        sourceUrl: "https://github.com/princerudh/rudhra-bot",
+        mediaUrl: "https://github.com",
+        mediaType: 1,
+        showAdAttribution: true,
+        renderLargerThumbnail: false }}}, { quoted: msg });
 
           await delay(1000);
           try {
