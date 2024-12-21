@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rudhra QR</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(45deg, #000000, #1a0000);
+            font-family: 'Segoe UI', sans-serif;
+            color: #fff;
+            padding: clamp(10px, 3vw, 20px);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .box {
+            width: min(340px, 95%);
+            height: auto;
+            min-height: 450px;
+            padding: clamp(15px, 4vw, 30px);
+            position: relative;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 0, 0, 0.3);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.3),
+                        inset 0 0 20px rgba(255, 0, 0, 0.2);
+            animation: glowingBorder 2s infinite alternate;
+        }
+
+        .title {
+            color: #fff;
+            font-size: clamp(1.5em, 5vw, 2em);
+            margin-bottom: clamp(10px, 3vw, 20px);
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+        }
+
+        .subtitle {
+            color: #ff3333;
+            font-size: clamp(1em, 3vw, 1.2em);
+            margin-bottom: clamp(15px, 4vw, 30px);
+        }
+
+        .qr-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: clamp(10px, 3vw, 20px);
+            border-radius: 15px;
+            margin: clamp(10px, 3vw, 20px) 0;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+            width: 100%;
+            max-width: 280px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #qrcode {
+            width: 100%;
+            max-width: 250px;
+            height: auto;
+            margin: 10px auto;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+            display: block;
+        }
+
+        #qrcode:hover {
+            transform: scale(1.05);
+        }
+
+        .status {
+            margin: clamp(10px, 3vw, 15px) 0;
+            padding: clamp(8px, 2vw, 10px);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            animation: pulse 2s infinite;
+            font-size: clamp(0.9em, 2.5vw, 1em);
+        }
+
+        .refresh-btn {
+            padding: clamp(10px, 2vw, 12px) clamp(20px, 4vw, 25px);
+            border-radius: 10px;
+            background: linear-gradient(45deg, #ff0000, #cc0000);
+            border: none;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: clamp(15px, 4vw, 20px);
+            font-size: clamp(0.8em, 2.5vw, 1em);
+        }
+
+        .refresh-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+        }
+
+        .footer {
+            margin-top: clamp(15px, 4vw, 20px);
+            color: #999;
+            font-size: clamp(0.8em, 2vw, 0.9em);
+            text-align: center;
+            width: 100%;
+        }
+
+        .emoji {
+            font-size: clamp(1.2em, 4vw, 1.5em);
+            margin: clamp(8px, 2vw, 10px) 0;
+        }
+
+        .instructions {
+            margin: clamp(10px, 3vw, 15px) 0;
+            padding: clamp(10px, 3vw, 15px);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            font-size: clamp(0.8em, 2.5vw, 0.9em);
+            line-height: 1.6;
+            color: #ccc;
+            width: 100%;
+            max-width: 280px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .loading-spinner {
+            width: clamp(40px, 10vw, 50px);
+            height: clamp(40px, 10vw, 50px);
+            border: clamp(3px, 1vw, 5px) solid #f3f3f3;
+            border-top: clamp(3px, 1vw, 5px) solid #ff0000;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: clamp(15px, 4vw, 20px) auto;
+        }
+
+        @keyframes glowingBorder {
+            from {
+                box-shadow: 0 0 20px rgba(255, 0, 0, 0.3),
+                            inset 0 0 10px rgba(255, 0, 0, 0.2);
+            }
+            to {
+                box-shadow: 0 0 40px rgba(255, 0, 0, 0.5),
+                            inset 0 0 20px rgba(255, 0, 0, 0.4);
+            }
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 360px) {
+            .box {
+                padding: 10px;
+            }
+
+            .qr-container {
+                padding: 10px;
+            }
+
+            .instructions {
+                font-size: 0.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box">
+            <div class="emoji">𝄜</div>
+            <h2 class="title">RUDHRA QR CODE</h2>
+            <p class="subtitle"> </p>
+
+            <div class="qr-container">
+                <div id="qr-loading" class="loading-spinner"></div>
+                <img id="qrcode" style="display: none;" alt="QR Code">
+            </div>
+
+            <div class="status" id="status">
+                Waiting for QR Code... 🔄
+            </div>
+
+            <div class="instructions">
+                <p> Scan this QR code with your WhatsApp</p>
+                <p> QR Code refreshes every 20 seconds</p>
+                <p> Secure connection guaranteed</p>
+            </div>
+
+            <button class="refresh-btn" onclick="refreshQR()">
+                Refresh QR ◎
+            </button>
+
+            <div class="footer">
+                <p> </p>
+                <p>made by princerudh</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let qrAttempts = 0;
+        const maxAttempts = 5;
+        let qrInterval;
+
+        async function fetchQR() {
+            try {
+                const loadingSpinner = document.getElementById('qr-loading');
+                const qrImage = document.getElementById('qrcode');
+                const statusElement = document.getElementById('status');
+
+                loadingSpinner.style.display = 'block';
+                qrImage.style.display = 'none';
+                statusElement.innerHTML = 'Fetching QR Code... ◎';
+
+                const response = await fetch('/qr');
+                if (!response.ok) throw new Error('Network response was not ok');
+
+                const data = await response.json();
+
+                if (data.qr) {
+                    qrImage.src = data.qr;
+                    qrImage.style.display = 'block';
+                    statusElement.innerHTML = 'QR Code Ready! Scan Now ';
+                    qrAttempts = 0;
+
+                    // Start checking connection status
+                    startConnectionCheck();
+                } else {
+                    throw new Error('Invalid QR data received');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                qrAttempts++;
+                const statusElement = document.getElementById('status');
+
+                if (qrAttempts >= maxAttempts) {
+                    statusElement.innerHTML = 'Error: Please refresh page or try again later';
+                } else {
+                    statusElement.innerHTML = `Retrying... (Attempt ${qrAttempts}/${maxAttempts}) `;
+                    setTimeout(fetchQR, 2000);
+                }
+            } finally {
+                document.getElementById('qr-loading').style.display = 'none';
+            }
+        }
+
+        function startConnectionCheck() {
+            clearInterval(qrInterval);
+            qrInterval = setInterval(async () => {
+                try {
+                    const response = await fetch('/qr/status');
+                    const data = await response.json();
+
+                    if (data.connected) {
+                        document.getElementById('status').innerHTML = ' Connected Successfully!';
+                        clearInterval(qrInterval);
+                    }
+                } catch (error) {
+                    console.error('Status check error:', error);
+                }
+            }, 3000);
+        }
+
+        function refreshQR() {
+            clearInterval(qrInterval);
+            qrAttempts = 0;
+            document.getElementById('status').innerHTML = 'Refreshing QR Code... ◎';
+            fetchQR();
+        }
+
+        // Auto refresh QR every 30 seconds if not connected
+        setInterval(() => {
+            const statusText = document.getElementById('status').innerHTML;
+            if (!statusText.includes('Connected')) {
+                refreshQR();
+            }
+        }, 30000);
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            clearInterval(qrInterval);
+        });
+
+        // Initial QR fetch
+        document.addEventListener('DOMContentLoaded', fetchQR);
+    </script>
+</body>
+</html>

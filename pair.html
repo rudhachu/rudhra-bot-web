@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rudhra Pair Code</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background-color: #000000;
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .box {
+      width: 100%;
+      min-height: 400px;
+      padding: 20px;
+      position: relative;
+      text-align: center;
+      background-color: rgba(0, 0, 0, 0.8);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(0, 255, 0, 0.3);
+      box-shadow: 0 0 30px rgba(0, 255, 0, 0.3),
+                  inset 0 0 20px rgba(0, 255, 0, 0.2);
+      animation: glowingBorder 2s infinite alternate;
+    }
+
+    @keyframes glowingBorder {
+      from {
+        box-shadow: 0 0 20px rgba(0, 255, 0, 0.3),
+                    inset 0 0 10px rgba(0, 255, 0, 0.2);
+      }
+      to {
+        box-shadow: 0 0 40px rgba(0, 255, 0, 0.5),
+                    inset 0 0 20px rgba(0, 255, 0, 0.4);
+      }
+    }
+
+    .title {
+      color: #00ff00;
+      font-size: clamp(1.5em, 5vw, 2em);
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
+    }
+
+    .subtitle {
+      color: #00ff00;
+      font-size: clamp(1em, 4vw, 1.2em);
+      margin-bottom: 30px;
+    }
+
+    .input-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .input-container input {
+      width: 100%;
+      padding: 15px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(0, 255, 0, 0.3);
+      color: #fff;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .input-container input:focus {
+      outline: none;
+      border-color: #00ff00;
+      box-shadow: 0 0 15px rgba(0, 255, 0, 0.4);
+    }
+
+    .input-container button {
+      width: 100%;
+      padding: 15px;
+      border-radius: 10px;
+      background: linear-gradient(45deg, #00ff00, #009900);
+      border: none;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .input-container button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 255, 0, 0.4);
+    }
+
+    .footer {
+      margin-top: 20px;
+      color: #999;
+      font-size: 0.9em;
+    }
+
+    #pair {
+      margin-top: 20px;
+      font-size: 1.2em;
+      word-break: break-word;
+    }
+
+    #copy {
+      display: inline-block;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+      word-break: break-word;
+    }
+
+    #copy:hover {
+      background: rgba(0, 255, 0, 0.1);
+    }
+
+    .emoji {
+      font-size: clamp(1.2em, 4vw, 1.5em);
+      margin: 10px 0;
+    }
+
+    @media (max-width: 380px) {
+      .box {
+        padding: 15px;
+      }
+
+      .input-container input,
+      .input-container button {
+        padding: 12px;
+        font-size: 14px;
+      }
+
+      .footer {
+        font-size: 0.8em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="box" id="box">
+      <div id="text">
+        <div class="emoji">⌨</div>
+        <h2 class="title">RUDHRA PAIR CODE</h2>
+        <p class="subtitle">Please Enter your WhatsApp number</p>
+        <div class="input-container">
+          <input type="tel" id="number" placeholder="Enter WhatsApp number (e.g.,91xxxxxxxxx)" pattern="[0-9]+" inputmode="numeric" />
+          <button id="submit">Generate Code</button>
+        </div>
+        <div id="pair"></div>
+        <div class="emoji">░░░░░░░░░░░░░░░░░░░░░</div>
+        <div class="footer">
+          <p> </p>
+          <p>made by princerudh</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"></script>
+  <script>
+    const pairElement = document.getElementById("pair");
+    const submitButton = document.getElementById("submit");
+    const numberInput = document.getElementById("number");
+    const boxElement = document.getElementById("box");
+
+    async function Copy() {
+      try {
+        const copyElement = document.getElementById("copy");
+        const textToCopy = copyElement.innerText.replace('CODE: ', '');
+        await navigator.clipboard.writeText(textToCopy);
+        
+        const originalText = copyElement.innerText;
+        copyElement.innerText = "COPIED";
+        copyElement.style.color = "#00ff00";
+        copyElement.style.fontWeight = "bold";
+        
+        setTimeout(() => {
+          copyElement.innerText = originalText;
+          copyElement.style.color = "#fff";
+          copyElement.style.fontWeight = "bold";
+        }, 500);
+      } catch (err) {
+        console.error('Failed to copy text:', err);
+      }
+    }
+
+    submitButton.addEventListener("click", async (e) => {
+      e.preventDefault();
+      
+      const number = numberInput.value.replace(/[^0-9]/g, "");
+      
+      if (!number) {
+        pairElement.innerHTML = '<span style="color:#ff3333;font-weight:bold"> Enter your WhatsApp number with country code</span><br><br>';
+        return;
+      }
+      
+      if (number.length < 11) {
+        pairElement.innerHTML = '<span style="color:#ff3333;font-weight:bold"> Invalid number format</span><br><br>';
+        return;
+      }
+
+      // Format the phone number
+      const formattedNumber = number.split('').reduce((acc, digit, index) => {
+        if (index === 2 || index === 7) return acc + ' ' + digit;
+        return acc + digit;
+      }, '');
+
+      numberInput.type = "text";
+      numberInput.value = "+" + formattedNumber;
+      numberInput.style.color = "#fff";
+      numberInput.style.fontSize = "20px";
+      
+      pairElement.innerHTML = '<span style="color:#fff;font-weight:bold">Please wait for some time...</span><br><br>';
+      
+      try {
+        const { data } = await axios(`/code?number=${number}`);
+        const code = data.code || "Service Unavailable";
+        pairElement.innerHTML = `
+          <div id="copy" onclick="Copy()" style="color:#fff;font-weight:bold;font-size:1.25em">
+            CODE: <span style="color:#00ff00;font-weight:bold">${code}</span>
+          </div><br><br>
+        `;
+      } catch (error) {
+        pairElement.innerHTML = '<span style="color:#ff3333;font-weight:bold"> Service Error. Please try again later.</span><br><br>';
+      }
+    });
+  </script>
+</body>
+</html>
