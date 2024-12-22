@@ -8,7 +8,7 @@
     "start": "pm2 start index.js --deep-monitoring --attach --name rudhra",
     "stop": "pm2 stop rudhra",
     "restart": "pm2 restart rudhra",
-    "dev": "npm start"
+    "dev": "node index.js"
   },
   "keywords": [
     "rudhra", "rudhra-bot", "rudhra-qr", "whatsapp-bot", "rudhra-web"
@@ -17,7 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "@hapi/boom": "^10.0.1",
-    "@whiskeysockets/baileys": "6.6.0",
+    "@whiskeysockets/baileys": "6.7.9",
     "awesome-phonenumber": "^2.64.0",
     "fs-extra": "latest",
     "megajs": "^1.3.3",
